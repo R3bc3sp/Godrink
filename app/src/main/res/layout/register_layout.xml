@@ -10,59 +10,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="vertical"
-            
-            android:layout_margin="16dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
 
         </LinearLayout>
 
-        
-        
+
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/edt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Nombre"
             android:inputType="text"
             android:textSize="18sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:met_floatingLabel="highlight"
-            />
+            app:met_floatingLabel="highlight" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/edt_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Direccion"
             android:inputType="text"
             android:textSize="18sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:met_floatingLabel="highlight"
-            />
+            app:met_floatingLabel="highlight" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/edt_birthdate"
-            android:hint="Fecha Nacimiento - yyyy-MM-dd"
-            android:digits="1234567890-"
-            android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:met_floatingLabel="highlight"
-            />
+            android:digits="1234567890-"
+            android:hint="Fecha Nacimiento - yyyy-MM-dd"
+            android:textSize="18sp"
+            app:met_floatingLabel="highlight" />
 
         <Button
-            android:backgroundTint="#cccccc"
-            android:textSize="22sp"
-            android:text="CONTINUE"
-            android:layout_alignParentBottom="true"
             android:id="@+id/btn_register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_gravity="center"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="#cccccc"
+            android:text="CONTINUE"
+            android:textSize="22sp" />
 
 
     </LinearLayout>

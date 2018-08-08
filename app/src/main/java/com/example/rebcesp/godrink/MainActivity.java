@@ -65,6 +65,80 @@ public class MainActivity extends AppCompatActivity {
                 //Loguearemos con el telefono de celular / movil. > Abrira a la pagina de facebook
                 startLoginPage(LoginType.PHONE);
 
+                //Check session
+
+                if(AccountKit.getCurrentAccessToken() != null){
+
+                    final android.app.AlertDialog alertDialog = new SpotsDialog(MainActivity.this);
+                    alertDialog.show();
+                    alertDialog.setMessage("Please waiting");
+
+                    // Auto Login
+                    AccountKit.getCurrentAccount(new AccountKitCallback<Account>() {
+                        @Override
+                        public void onSuccess(final Account account) {
+
+                            mService.checkUserExists(account.getPhoneNumber().toString())
+                                    .enqueue(new Callback<CheckUserResponse>() {
+                                        @Override
+                                        public void onResponse(Call<CheckUserResponse> call, Response<CheckUserResponse> response) {
+
+                                            CheckUserResponse userResponse = response.body();
+                                            if(userResponse.isExists()){
+
+                                                //Fetch Information
+
+                                                mService.getUserInformation(account.getPhoneNumber().toString())
+                                                        .enqueue(new Callback<User>() {
+                                                            @Override
+                                                            public void onResponse(Call<User> call, Response<User> response) {
+
+                                                                //If User already exists, just strat new Activity
+
+
+                                                                alertDialog.dismiss();
+
+                                                                Common.currentUser = response.body(); //Fix here
+
+                                                                startActivity(new Intent (MainActivity.this, HomeActivity.class ));
+                                                                finish(); //Close MainActivity
+
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<User> call, Throwable t) {
+                                                                Toast.makeText(MainActivity.this,t.getMessage(),Toast.LENGTH_SHORT);
+
+                                                            }
+                                                        });
+
+
+                                            }
+                                            else{
+                                                //Else, need register
+                                                alertDialog.dismiss();
+
+                                                showRegisterDialog(account.getPhoneNumber().toString());
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<CheckUserResponse> call, Throwable t) {
+
+                                        }
+                                    });
+                        }
+
+                        @Override
+                        public void onError(AccountKitError accountKitError) {
+
+                            Log.d("ERROR",accountKitError.getErrorType().getMessage());
+
+                        }
+                    });
+                }
+
             }
         });
 
@@ -111,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                     //Get User phone and Check exists on server
-
                     AccountKit.getCurrentAccount(new AccountKitCallback<Account>() {
                         @Override
                         public void onSuccess(final Account account) {
@@ -124,8 +197,35 @@ public class MainActivity extends AppCompatActivity {
                                             CheckUserResponse userResponse = response.body();
                                             if(userResponse.isExists()){
 
-                                                //If User already exists, just strat new Activity
-                                                alertDialog.dismiss();
+                                                //Fetch Information
+
+                                                mService.getUserInformation(account.getPhoneNumber().toString())
+                                                        .enqueue(new Callback<User>() {
+                                                            @Override
+                                                            public void onResponse(Call<User> call, Response<User> response) {
+
+                                                                //If User already exists, just strat new Activity
+
+
+                                                                alertDialog.dismiss();
+
+                                                                //Fixed first time crash
+
+                                                                Common.currentUser = response.body();
+
+                                                                startActivity(new Intent (MainActivity.this, HomeActivity.class ));
+                                                                finish(); //Close MainActivity
+
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<User> call, Throwable t) {
+                                                                Toast.makeText(MainActivity.this,t.getMessage(),Toast.LENGTH_SHORT);
+
+                                                            }
+                                                        });
+
+
                                             }
                                             else{
                                                 //Else, need register
@@ -224,7 +324,13 @@ public class MainActivity extends AppCompatActivity {
                                 if (TextUtils.isEmpty(user.getError_msg())) {
                                     Toast.makeText(MainActivity.this, "User register Successfully", Toast.LENGTH_SHORT).show();
 
+
+                                    Common.currentUser = response.body();
                                     //Start New Activity
+                                    startActivity(new Intent (MainActivity.this, HomeActivity.class ));
+                                    finish();
+
+
 
                                 }
 

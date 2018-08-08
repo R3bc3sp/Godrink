@@ -26,6 +26,16 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    //Slider Layout
+    implementation 'com.android.support:support-v4:27.+'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.daimajia.slider:library:1.1.5@aar'
+
+    //RxJava
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
+
     //Librerias a usar
     implementation 'com.mikhaellopez:circularfillableloaders:1.2.0'
     implementation 'com.android.support:design:27.1.1'
@@ -35,5 +45,6 @@ dependencies {
     implementation 'com.github.d-max:spots-dialog:0.7@aar'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.facebook.android:account-kit-sdk:4.+'
 }
